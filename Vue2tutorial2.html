@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" 
+    content="Ezinne Anne">
+    <title>Vue2tutorial</title>
+    <link rel="stylesheet" href="style.css"/>
+  </head>
+  <body>
+    <div id="app">
+      <img :class="gender" v-bind:src="picture" alt="" />
+      <h1>{{ firstName }} {{ lastName }}</h1>
+      <h3>Email: {{ email }}</h3>
+      <button v-on:click="getUser()" :class="gender">Get random User</button>
+    </div>
+    
+    
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
