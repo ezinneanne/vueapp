@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" 
+    content="Ezinne Anne">
+    <title>Learning Vue 3 basics</title>
+    <style type="text/css" media="all">
+      .box {
+        background-color: purple;
+        height: 200px;
+        width: 200px;
+      }
+      .box .two {
+        background: red;
+      }
+      .box .three {
+        background-color: green;
+      }
+      [v-cloak] {
+        display: none;
+      }
+      input {
+        margin: 10px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <login-form />
+      <!--{{ greeting }}
+      <input @key-up.enter="greet" v-model="greeting"/> key-up.enter is an event in Vuejs-->
+      <hr />
+      <!--<button v-on:click="isVisible = !isVisible">Show Box</button> (another shortcut for this is using the @ symbol (@click) works the same as v-click)-->
+      <button @click="toggleBox">Toggle Box</button>
+      <div v-if="isVisible" class="box">
+      </div>
+    </div>
+    
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+      let app = Vue.createApp({
+        data: function() {
+          return {
+            greeting: "Hello, How Are You",
+            isVisible: false,
+          }
+        },
+        methods: {
+          toggleBox() {
+            this.isVisible = !this.isVisible
+          },
+          greet() {
+            console.log(this.greeting)
+          }
+        }
+      })
+      
+      app.component('login-form', {
+        template: `
+          <form @submit.prevent="handleSubmit">
+            <h1>{{ title }}</h1>
+            <p v-for="str in inputs">{{ str }}</p>
+            <custom-input v-model="email" :label="emailLabel" />
+            <custom-input v-model="password" :label="passwordLabel" />
+            <button>Log in</button>
+          </form>
+        `,
+        components: ['custom-input'],
+        data() {
+          return {
+            title: 'Login Form',
+            inputs: [
+              'email',
+              'password',
+              'name'
+              ],
+            email: '',
+            password: '',
+            emailLabel: "Email",
+            passwordLabel: "Password"
+          }
+        },
+        methods: {
+          handleSubmit() {
+            console.log(this.email,this.password)
+          }
+        }
+      })
+      app.component('custom-input', {
+        template: `
+          <label>
+            {{ label }}
+            <input type="text" v-model="inputValue">
+          </label>
+        `,
+        props: ['label', 'modelValue'],
+        computed: {
+          inputValue: {
+            get() {
+              return this.modelValue
+            },
+            set(value) {
+              this.$emit('update:modelValue', value)
+            }
+          }
+        }
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>
