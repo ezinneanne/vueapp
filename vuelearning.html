@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Vue Learning Exercise 1</title>
+    
+  </head>
+  <body>
+    <div id="app">
+      <div v-if="gender == 'male' || gender == 'female'">
+        <h1>Hello,
+            <span v-show="gender == 'male'">Mister {{name}}.</span>
+            <!-- render span if 'gender' equals to 'female' -->
+            <span v-if="gender == 'female'">Miss {{name}}.</span>
+        </h1>
+      </div>
+      <h1 v-else>So you can't decide, </h1>
+      <label for="gender">Enter your gender :</label>
+      <input v-model="gender" id="gender"/>
+      <label for="name">Enter your name :</label>
+      <input v-model="name" id="name"/>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+      let app = Vue.createApp({
+        data: function() {
+          return {
+            gender: 'female',
+            name: 'Freeyya'
+          }
+        },
+        greet() {
+          console.log(this.gender)
+        },
+        titles() {
+          console.log(this.title)
+        }
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>
