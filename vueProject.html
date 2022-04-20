@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" 
+    content="Ezinne Anne">
+    <meta name="viewport" 
+    content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Vue Project</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cabin&family=Great+Vibes&family=Kiwi+Maru&family=Sacramento&family=Source+Sans+Pro&display=swap');  
+
+      *{
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #ecf0f1;
+        font-family: "Source Sans Pro"  Sans-Serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+        margin: 0;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      .card {
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        border-radius: 10px;
+        overflow: hidden;
+        width: 350px;
+      }
+
+      .card-header {
+        height: 200px;
+      }
+
+      .card-header img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+
+      .card-content {
+        background-color: #fff;
+        padding: 30px;
+      }
+
+      .card-title {
+        height: 20px;
+        margin: 0 0 25px;
+      }
+
+      .card-excerpt {
+        color: #777;
+        margin: 25px 0 20px;
+      }
+
+      .author {
+        display: flex;
+      }
+
+      .profile-img {
+        border-radius: 50%;
+        overflow: hidden;
+        height: 40px;
+        width: 40px;
+      }
+
+      .author-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-left: 10px;
+        width: 100px;
+      }
+
+      .author-info small {
+        color: #aaa;
+        margin-top: 5px;
+      }
+
+      .animated-bg {
+        background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 10%,#f6f7f8 20%, #f6f7f8 100%);
+        background-size: 200% 100%;
+        animation: bgPos 1s linear infinite;
+      }
+
+      .animated-bg-text {
+        border-radius: 50px;
+        display: inline-block;
+        margin: 0;
+        height: 10px;
+        width: 100%;
+      }
+
+      @keyframes bgPos {
+        0% {
+          background-position: 50% 0;
+        }
+        100% {
+          background-position: -150% 0;
+        }
+      }
+    </style>
+    </head>
+    <body>
+    <div id="app">
+      <div class="card">
+        <div class="card-header animated-bg"><img src="work1.jpg" alt="workimg" />&nbsp;
+        </div>
+        <div class="card-content">
+          <h3 class="card-title animated-bg animated-bg-text">{{ title }}&nbsp;
+          </h3>
+          <p class="card-excerpt"> {{ excerpt }}&nbsp;
+            <!--<span class="animated-bg animated-bg-text">&nbsp;</span>
+            <span class="animated-bg animated-bg-text">&nbsp;</span>
+            <span class="animated-bg animated-bg-text">&nbsp;</span>-->
+          </p>
+          <div class="author">
+            <div class="profile-img animated-bg"><img v-bind:src="profile_img" alt="workimg" />
+            &nbsp;
+            </div>
+            <div class="author-info">
+              <strong class="animated-bg animated-bg-text"> {{firstName}} {{lastName}}&nbsp;</strong>
+              <small class="animated-bg animated-bg-text">{{date}}&nbsp;</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+      let app = Vue.createApp({
+        data: function() {
+          return {
+            title: 'Welcome to Zinny Coding Institute',
+            excerpt: 'Welcome to Zinny Coding Institute, dear Coder',
+            profile_img: 'https://randomuser.me/api/portraits/men/10.jpg',
+            firstName: 'John',
+            lastName: 'Doe',
+            date: 'Apr 18th,2022',
+          }
+        },
+        methods: {
+          async getUser() {
+            const res = await fetch('https://randomuser.me/api')
+            const { results } = await res.json()
+      
+            this.firstName = results[0].name.first
+            this.lastName = results[0].name.last
+            this.profile_img = results[0].picture.large
+          },
+          dates() {
+            console.log(this.date)
+          },
+          excerpts() {
+            console.log(this.excerpt)
+          },
+          titles() {
+            console.log(this.title)
+          },
+        }
+      })
+      app.mount('#app')
+    
+    </script>
+  </body>
+</html>
